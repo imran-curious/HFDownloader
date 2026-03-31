@@ -1,37 +1,91 @@
 # HFDownloader - Hugging Face Model Downloader
 
-### This package provides the user with one method that downloads a tokenizer and model from [HuggingFace Model Hub](https://huggingface.co/models) to a local path. 
+HFDownloader downloads a model repository from the [Hugging Face Model Hub](https://huggingface.co/models) into a local folder.
 
-This package utilizes the `transformers` library to download a tokenizer and model using just one method. When a model is downloaded, it will save a state from a loaded tokenizer and model to a local path. If the path does not exist, the method will create one with the title passed.
+This project now supports both:
 
-This Github repo also allows you to run '`hf_downloader.py`' like a script if you don't want to open a python terminal. It has two positional arguments, the model and the pathname you wish the model to save to. Example usage may look something like this in the command line.
+- a no-terminal Windows GUI
+- a command-line interface
+- a small Python API
 
-    python hf_downloader.py cardiffnlp/twitter-roberta-base-sentiment sentiment_model_path
+# No-Terminal Usage on Windows
 
+If you do not want to use a terminal, launch the app by double-clicking one of these files in the project folder:
+
+- `HFDownloader_GUI.pyw`
+- `HFDownloader_GUI.vbs`
+
+Then:
+
+1. Enter the Hugging Face model id, such as `cardiffnlp/twitter-roberta-base-sentiment`
+2. Choose the base folder where you want the files saved
+3. (Optional) Add a Hugging Face token only if the model is gated or private
+4. Click `Download`
+
+The app creates a visible model folder inside the base folder, opens it while downloading, and shows saved files in the activity panel.
+
+# Command-Line Usage
+
+If you do want the script interface, use:
+
+```powershell
+python src\hfdownloader\hf_downloader.py cardiffnlp/twitter-roberta-base-sentiment sentiment_model_path
+```
+
+Optional flags:
+
+```powershell
+python src\hfdownloader\hf_downloader.py meta-llama/Llama-3.2-1B-Instruct llama_files --token YOUR_TOKEN --revision main
+```
 
 # Installation
-The package can be installed with the following command:
 
-    pip install hfdownloader
+Install from PyPI:
 
-# How to Use
-Here is a bit of code you can reference to see how to use the package. I will be using another package I released called [HFLoader](https://github.com/Solonce/HFLoader), that simply loads the tokenizer and model. You can do this in any way, this package is not required.
+```powershell
+pip install hfdownloader
+```
 
-    import hlfloader as hfl
-    import hfdownload as hfd
-    
-    huggingface_model = "cardiffnlp/twitter-roberta-base-sentiment"
-    tokenizer, model = hfl.load_model(huggingface_model)
-    hfd.save_model("HuggingFaceModelPath", tokenizer, model)
-    
-    
-The code above is the easiest way I have found to save models from the HuggingFace Model Hub locally.
+Or install this local checkout:
 
-## Requirements
-> pip install transformers
+```powershell
+pip install -e .
+```
 
-**Not required but helpful**
-> pip install hfloader
+If you install it from source, you will also get launchers:
 
-## Notes
-I don't have plans to upkeep this project unless it necessitates it. I was able to achieve the goal I had set out when developing the package.
+- `hfdownloader`
+- `hfdownloader-gui`
+
+# Python Usage
+
+To download a model from Python:
+
+```python
+from hfdownloader import download_model
+
+download_model(
+    "cardiffnlp/twitter-roberta-base-sentiment",
+    "HuggingFaceModelPath",
+)
+```
+
+If you already have a tokenizer and model loaded, you can still save them with:
+
+```python
+from hfdownloader import save_model
+
+save_model("HuggingFaceModelPath", tokenizer, model)
+```
+
+# Requirements
+
+```powershell
+pip install huggingface_hub
+```
+
+For gated or private models, you may also need a Hugging Face access token.
+
+# Notes
+
+`HFDownloader_GUI.pyw` is intended for double-click usage on Windows without opening a terminal window.
