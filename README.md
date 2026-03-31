@@ -89,3 +89,5 @@ For gated or private models, you may also need a Hugging Face access token.
 # Notes
 
 `HFDownloader_GUI.pyw` is intended for double-click usage on Windows without opening a terminal window.
+
+[Disclaimer it was made terminal free entirely with ChatGPT-5.4]
